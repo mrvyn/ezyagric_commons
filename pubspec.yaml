@@ -1,7 +1,7 @@
 name: ezyagric_commons
 description: "A new Flutter package project."
 version: 0.0.2
-homepage: https://github.com/dudleywamutanga/ezyagric_commons
+homepage:
 
 environment:
   sdk: ">=3.3.4 <4.0.0"
@@ -15,7 +15,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   badges: ^3.1.2
   get: ^4.6.6
-  share_plus: ^6.3.1
+  # share_plus: ^6.3.1
 
 dev_dependencies:
   flutter_test:
