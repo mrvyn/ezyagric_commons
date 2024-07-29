@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../ezyagric_commons.dart';
-import 'styles/colors.dart';
+part of ezyagric_commons;
 
 class DashboardPage extends StatefulWidget {
   DashboardPage(
