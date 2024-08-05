@@ -48,8 +48,8 @@ class _DashboardPageState extends State<DashboardPage> {
             // unselectedItemColor: Colors.blueGrey,
 
             selectedItemColor: AppColors.primaryColor,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400),
             unselectedItemColor: Colors.blueGrey,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -78,6 +78,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   currentIndex = index;
                 });
               }
+
+              // GetX
             }),
       ),
     );
