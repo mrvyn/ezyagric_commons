@@ -16,7 +16,7 @@ void showMoreBottomSheet() {
           ),
           onTap: () {
             Get.back();
-            Get.to(() => const HelpContent());
+            Get.to(() => HelpContent());
           },
         ),
         ListTile(

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../utils/constants.dart';
+
 class FeedbackController extends GetxController {
   final _dio = Dio();
   var isLoading = false.obs;
@@ -28,7 +30,7 @@ class FeedbackController extends GetxController {
 
     try {
       final response = await _dio.post(
-        "http://192.168.10.13:5000/feedbacks/save_feedback", // Replace with your API endpoint
+        "$feedbacksAPI/save_feedback", // Replace with your API endpoint
         data: feedback_data,
         options: Options(
           headers: {

@@ -1,27 +1,28 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:get/get.dart';
-
 part of ezyagric_commons;
 
 class HelpContent extends StatelessWidget {
-  const HelpContent({super.key});
+  HelpContent({super.key});
+
+  var contact = "+256708383845";
+  var customerEmail = "customercare@ezyagric.com";
+
+  _launchWhatsapp() async {
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+
+    try {
+      await launchUrl(Uri.parse(androidUrl));
+    } on Exception {
+      Get.snackbar("WhatsApp not installed",
+          "Please install whatsapp to use this feature",
+          snackPosition: SnackPosition.BOTTOM);
+      // print('WhatsApp is not installed.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFe6e6e6),
       appBar: AppBar(
-        // leading: GestureDetector(
-        //     onTap: () {
-        //       Get.back();
-        //     },
-        //     child: const Icon(
-        //       Icons.arrow_back,
-        //       color: Colors.white,
-        //     )),
-        backgroundColor: const Color(0xFF2674b2),
         title: const Text(
           "Support",
           style: TextStyle(color: Colors.white, fontSize: 19),
@@ -37,174 +38,223 @@ class HelpContent extends StatelessWidget {
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               color: Colors.white,
               height: 100,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    width: 100,
-                    decoration: const BoxDecoration(
-                      //  color: Colors.amber,
-                      image: DecorationImage(
-                        image: AssetImage("assets/icons/call.png"),
-                        //  fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () async {
+                  final call = Uri.parse('tel:$contact');
+                  if (await canLaunchUrl(call)) {
+                    launchUrl(call);
+                  } else {
+                    throw 'Could not launch $call';
+                  }
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        //  color: Colors.amber,
+                        image: DecorationImage(
+                          image: AssetImage("assets/icons/call.png"),
+                          //  fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Call",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF2674b2),
-                                fontSize: 18),
-                          ),
-                          Text(
-                            "0708383845",
-                            style: TextStyle(
-                              color: Color(0xFF2674b2),
+                    Expanded(
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Text(
+                              "Call",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF2674b2),
+                                  fontSize: 18),
                             ),
-                          ),
-                        ],
+                            Text(
+                              contact,
+                              style: const TextStyle(
+                                color: Color(0xFF2674b2),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               color: Colors.white,
               height: 100,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    width: 100,
-                    decoration: const BoxDecoration(
-                      //  color: Colors.amber,
-                      image: DecorationImage(
-                        image: AssetImage("assets/icons/mail.png"),
-                        // fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () async {
+                  String? encodeQueryParameters(Map<String, String> params) {
+                    return params.entries
+                        .map((MapEntry<String, String> e) =>
+                            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                        .join('&');
+                  }
+
+                  final Uri email = Uri(
+                    scheme: 'mailto',
+                    path: customerEmail,
+                    query: encodeQueryParameters(<String, String>{
+                      'subject': 'Reach Out To Us',
+                      'body': '',
+                    }),
+                  );
+                  if (await canLaunchUrl(email)) {
+                    launchUrl(email);
+                  } else {
+                    throw 'Could not launch $email';
+                  }
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        //  color: Colors.amber,
+                        image: DecorationImage(
+                          image: AssetImage("assets/icons/mail.png"),
+                          // fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: const Column(
+                    Expanded(
+                      child: Container(
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
+                            Text(
+                              "Mail",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF2674b2),
+                                  fontSize: 18),
+                            ),
+                            Text(
+                              "customercare@ezyagric.com",
+                              style: TextStyle(
+                                color: Color(0xFF2674b2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              color: Colors.white,
+              height: 100,
+              child: InkWell(
+                onTap: () {
+                  _launchWhatsapp();
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      width: 100,
+                      decoration: const BoxDecoration(
+                          //  color: Colors.amber,
+                          image: DecorationImage(
+                        image: AssetImage("assets/icons/whatsapp.png"),
+                        //  fit: BoxFit.cover,
+                      )),
+                    ),
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           // SizedBox(
                           //   height: 20,
                           // ),
-                          Text(
-                            "Mail",
+                          const Text(
+                            "WhatsApp",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF2674b2),
                                 fontSize: 18),
                           ),
                           Text(
-                            "customercare@ezyagric.com",
-                            style: TextStyle(
+                            contact,
+                            style: const TextStyle(
                               color: Color(0xFF2674b2),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               color: Colors.white,
               height: 100,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    width: 100,
-                    decoration: const BoxDecoration(
-                        //  color: Colors.amber,
-                        image: DecorationImage(
-                      image: AssetImage("assets/icons/whatsapp.png"),
-                      //  fit: BoxFit.cover,
-                    )),
-                  ),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // SizedBox(
-                        //   height: 20,
-                        // ),
-                        Text(
-                          "WhatsApp",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF2674b2),
-                              fontSize: 18),
-                        ),
-                        Text(
-                          "0708383845",
-                          style: TextStyle(
-                            color: Color(0xFF2674b2),
-                          ),
-                        ),
-                      ],
+              child: InkWell(
+                onTap: () async {
+                  final sms = Uri.parse('sms:$contact');
+                  if (await canLaunchUrl(sms)) {
+                    launchUrl(sms);
+                  } else {
+                    throw 'Could not launch $sms';
+                  }
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      width: 100,
+                      decoration: const BoxDecoration(
+                          //  color: Colors.amber,
+                          image: DecorationImage(
+                        image: AssetImage("assets/icons/sms.png"),
+                        // fit: BoxFit.cover),
+                      )),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              color: Colors.white,
-              height: 100,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    width: 100,
-                    decoration: const BoxDecoration(
-                        //  color: Colors.amber,
-                        image: DecorationImage(
-                      image: AssetImage("assets/icons/sms.png"),
-                      // fit: BoxFit.cover),
-                    )),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "SMS",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Container(
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "SMS",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF2674b2),
+                                  fontSize: 18),
+                            ),
+                            Text(
+                              "0708383845",
+                              style: TextStyle(
                                 color: Color(0xFF2674b2),
-                                fontSize: 18),
-                          ),
-                          Text(
-                            "0708383845",
-                            style: TextStyle(
-                              color: Color(0xFF2674b2),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
