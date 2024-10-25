@@ -72,7 +72,9 @@ signOutDialog() {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async{
+                              
+                            },
                             child: const Text(
                               'Sign Out',
                             ),

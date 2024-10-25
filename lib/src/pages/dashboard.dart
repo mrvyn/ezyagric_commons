@@ -1,14 +1,17 @@
 part of ezyagric_commons;
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage(
-      {super.key,
-      required this.homePage,
-      required this.ordersPage,
-      required this.profilePage});
+  DashboardPage({
+    super.key,
+    required this.homePage,
+    required this.ordersPage,
+    required this.profilePage,
+    this.currentIndex = 0,
+  });
   Widget homePage;
   Widget ordersPage;
   Widget profilePage;
+  int currentIndex;
 
   // var screens;
 
@@ -17,7 +20,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int currentIndex = 0;
+  // int currentIndex = selectedIndex;
   @override
   Widget build(BuildContext context) {
     var screens = [
@@ -27,7 +30,8 @@ class _DashboardPageState extends State<DashboardPage> {
       Container()
     ];
     return Scaffold(
-      body: screens[currentIndex], //getNavigatorItems()[currentIndex].screen,
+      body: screens[
+          widget.currentIndex], //getNavigatorItems()[currentIndex].screen,
       backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -69,13 +73,13 @@ class _DashboardPageState extends State<DashboardPage> {
                 label: 'More',
               ),
             ],
-            currentIndex: currentIndex,
+            currentIndex: widget.currentIndex,
             onTap: (int index) {
               if (index == 3) {
                 showMoreBottomSheet();
               } else {
                 setState(() {
-                  currentIndex = index;
+                  widget.currentIndex = index;
                 });
               }
 
