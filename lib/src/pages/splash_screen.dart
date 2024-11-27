@@ -10,12 +10,20 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
+      // backgroundColor: Colors.blue,
+      // centered: false,
+      splashIconSize: double.infinity,
+
       duration: 3000,
-      splash: Image.asset(
-        width: 1000,
-        splashImage,
-        fit: BoxFit.cover,
+      splash: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(splashImage),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
+
       nextScreen: nextScreen,
       splashTransition: SplashTransition.fadeTransition,
       // backgroundColor: Colors.blue,
